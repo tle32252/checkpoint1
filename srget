@@ -6,7 +6,7 @@ import sys
 import asyncore
 
 
-filename = sys.argv[-2]
+filename = sys.argv[-2] 
 f = open(filename , 'wb')
 
 servName = sys.argv[-1]
@@ -42,30 +42,29 @@ clientSocket.send(request1)
 data = ""
 header_buffer = ''
 bytesCount = 0
-while True:
+while True: #this loop receive the first portion with header and split it out for header part and remaning part
 
 	data_received = clientSocket.recv(8192)
 	header_buffer += data_received
 	if '\r\n\r\n' in header_buffer:
 		header, remain = header_buffer.split('\r\n\r\n')
 		bytesCount += len(remain)
-		f.write(remain)
+		f.write(remain) #this will write the remaining part
 		break
 
 left_huge=''
 content1 = header.split('Content-Length: ')
-# print content1
 ww = content1[1]
 www = ww.split('Connection: ')
-ContentLLL = www[0] #Content length
-Cl = ContentLLL.split("\r\n")[0]
-print "HHHHH "+ Cl
-print "cl",type(Cl)
+ContentLLL = www[0] 
+Cl = ContentLLL.split("\r\n")[0] #Find how large the file is
+# print "HHHHH "+ Cl
+# print "cl",type(Cl)
 while bytesCount<int(Cl):
 	data_received = clientSocket.recv(8192)
 	# left_huge+= data_received
-	f.write(data_received)
-	print int(Cl) - bytesCount
+	f.write(data_received) #write all the data at the same time received
+	# print int(Cl) - bytesCount
 	bytesCount += len(data_received)
 	# if len(data_received)==0:
 	# 	# f.write(left_huge)
@@ -73,6 +72,7 @@ while bytesCount<int(Cl):
  
 f.close()
 clientSocket.close()
+print "Done loading"
 
 
 # content1 = header.split('Content-Length: ')
