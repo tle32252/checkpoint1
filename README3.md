@@ -3,7 +3,7 @@ This file does not support the resume function for thread. However, it is able t
 To run this file please do chmod +x in the terminal 
 
 
-To do the normal download, in the main function, else part, use self.downloadAll() instead of self.downloadThread()
+To do the normal download, in the main function, else part, use self.downloadAll() instead of self.downloadThread() or you can run srget2final.py instead
 
 ex: ./srgetcp3.py -o filename.txt url
 
